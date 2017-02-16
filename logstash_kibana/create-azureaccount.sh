@@ -8,7 +8,7 @@
 #                This is intended to show how automation is possible with certificate
 #
 #=========================================
-if [[ -f x1 ]]
+if [ -f x1 ]
 then
   rm x1 x3 privkey.pem  cert*
 fi
@@ -16,6 +16,10 @@ fi
 azure login
 echo "your app name"
 read app
+echo "which account would you like to use"
+azure account list
+read account
+azure account set $account
 openssl req -x509 -days 3650 -newkey rsa:2048 -out cert.pem -nodes -subj "/CN=$app"
 sed '1d' cert.pem >cert.pem.modified
 
@@ -26,9 +30,10 @@ cat privkey.pem cert.pem > certificate.pem
 cert=$(cat cert.pem.modified)
 azure ad sp create -n $app --cert-value "$cert" >x1
 
+username=$(azure account show --json | jq -r  '.[].user.name')
+
 
 tenantId=$(azure account show | grep Tenant | sed 's/^.*[: ]//g')
-# this assumes the 1st subscription, you can hardcode this as well...find out which subscription by doing: azure account list
 subscription=$(azure account show | grep ID | grep -v Tenant | sed 's/^.*[: ]//')
 
 
@@ -49,4 +54,7 @@ rm -f x1  x3  privkey.pem cert.pem cert.pem.modified
 thumbprint=$(openssl x509 -in certificate.pem -fingerprint -noout | sed 's/SHA1 Fingerprint=//g'  | sed 's/://g')
 echo "Now you can use the following command to automatically login via a script: loginToAzure.sh  (works only in combination with generated certificate.pem"
 echo "azure login --service-principal --tenant $tenantId -u $newObjectId --certificate-file certificate.pem --thumbprint $thumbprint" >loginToAzure.sh
+echo "logging out of initial login"
+azure logout $username
 chmod 700 loginToAzure.sh
+echo "now login with the created loginToAzure.sh script...njoy!"

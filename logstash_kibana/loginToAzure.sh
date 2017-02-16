@@ -1,1 +1,1 @@
-azure login --service-principal --tenant 72f988bf-86f1-41af-91ab-2d7cd011db47 -u aee4c670-d723-44ab-9c7c-43970aff1310 --certificate-file certificate.pem --thumbprint D5D4D5AD9DC7EF0B936C86BBC1358FBD7480381C
+azure login --service-principal --tenant 72f988bf-86f1-41af-91ab-2d7cd011db47 -u d3234fcf-b226-4e2d-a9f8-7abc74c2e1c2 --certificate-file certificate.pem --thumbprint BED7D39342F03F84176659ECAB3A5D9AB2A5BB87
