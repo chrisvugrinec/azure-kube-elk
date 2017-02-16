@@ -1,0 +1,3 @@
+cluster.name: vu-elk
+node.name: "vu-elk-test3"
+discovery.zen.ping.unicast.hosts: ["vu-elk-test3", "vu-elk-test4"]

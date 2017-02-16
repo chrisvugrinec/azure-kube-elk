@@ -1,0 +1,26 @@
+{
+  "id": "java-springbootapp",
+  "mem": 256,
+  "cpus": 1.0,
+  "instances": 2,
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "cvugrinec/springbootapp:1.0",
+      "network": "BRIDGE",
+      "portMappings": [{ "containerPort": 8080, "hostPort": 0, "servicePort": 10002, "protocol": "tcp" } ]
+    }
+  },
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "portIndex": 0,
+      "path": "/"
+    }
+  ],
+  "labels":{
+    "HAPROXY_GROUP":"external",
+    "HAPROXY_0_VHOST":"40.68.37.205",
+    "HAPROXY_0_MODE":"http"
+  }
+}
