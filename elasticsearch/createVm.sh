@@ -22,3 +22,5 @@ sed -in 's/publicIPAddresses_elastic_ip_name_value/\"'$rg-$elname-$id'\"/g' $rg-
 sed -in 's/virtualNetworks_name_value/\"'$rg-vnet'\"/g' $rg-$elname.json
 
 azure group deployment create --template-file vm.json --parameters-file $rg-$elname.json $rg
+
+rm -f *.jsonn

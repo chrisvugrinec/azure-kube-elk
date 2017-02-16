@@ -192,6 +192,24 @@
             },
             "resources": [],
             "dependsOn": []
+        },
+        {
+          "type": "Microsoft.Compute/virtualMachines/extensions",
+          "name": "[concat(parameters('virtualMachines_elastic_name'),'/', 'install_es')]",
+          "apiVersion": "2017-03-30",
+          "location": "[resourceGroup().location]",
+          "dependsOn": [
+             "[concat('Microsoft.Compute/virtualMachines/', parameters('virtualMachines_elastic_name'))]"
+          ],
+          "properties": {
+          "publisher": "Microsoft.Azure.Extensions",
+          "type": "CustomScript",
+          "typeHandlerVersion": "2.0",
+          "autoUpgradeMinorVersion": true,
+          "settings": {
+            "commandToExecute": "curl -k https://raw.githubusercontent.com/chrisvugrinec/azure-kube-elk/master/elasticsearch/provision/provision-es.sh | sudo bash"
+          }
         }
+      }
     ]
 }
