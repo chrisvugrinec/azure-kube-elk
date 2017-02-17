@@ -29,6 +29,10 @@
         "virtualNetworks_name": {
             "defaultValue": "vu-elk",
             "type": "String"
+        },
+        "availabilitySet_name": {
+            "defaultValue": "vu-elk-avset",
+            "type": "String"
         }
     },
     "variables": {},
@@ -74,12 +78,16 @@
                             "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_elastic_name'))]"
                         }
                     ]
+                },
+                "availabilitySet": {
+                   "id": "[resourceId('Microsoft.Compute/availabilitySets',parameters('availabilitySet_name'))]"
                 }
             },
             "resources": [],
             "dependsOn": [
                 "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_elastic_name'))]",
-                "[resourceId('Microsoft.Storage/storageAccounts', parameters('virtualMachines_elastic_uri'))]"
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('virtualMachines_elastic_uri'))]",
+                "[resourceId('Microsoft.Compute/availabilitySets', parameters('availabilitySet_name'))]"
             ]
         },
         {
@@ -192,6 +200,16 @@
             },
             "resources": [],
             "dependsOn": []
+        },
+       {
+          "apiVersion": "2016-04-30-preview",
+          "type": "Microsoft.Compute/availabilitySets",
+          "name": "[parameters('availabilitySet_name')]",
+          "location": "[resourceGroup().location]",
+          "properties": {
+            "platformFaultDomainCount": "2",
+            "platformUpdateDomainCount": "2"
+          }
         },
         {
           "type": "Microsoft.Compute/virtualMachines/extensions",

@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: elkdemo-kibana
+  namespace: default
+  labels:
+    component: elkdemo-kibana
+    role: kibana
+spec:
+  type: LoadBalancer
+  selector:
+    component: elkdemo-kibana
+    role: kibana
+  ports:
+  - name: http
+    port: 8099
+    targetPort: 5601
+    protocol: TCP

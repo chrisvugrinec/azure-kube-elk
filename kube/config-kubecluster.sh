@@ -7,6 +7,11 @@ tmpkey=`echo $(cat ~/.ssh/id_rsa.pub)`
 sshKey=$(echo "$tmpkey" | sed 's/\//\\\//g')
 
 
+echo "make sure you entered the proper values in the script:"
+echo "- clientid"
+echo "- clientsecret"
+echo "- numberofnodes"
+
 clientid="34e0e4f3-d330-42ab-bf91-164030063f13"
 clientsecret="01TmHlw9feylLTUgqSZK9VsRwVDNO9o5svSu94J7MSM="
 numberofnodes=3

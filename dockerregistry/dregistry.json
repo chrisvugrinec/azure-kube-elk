@@ -1,0 +1,42 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "registries_dregistry_name": {
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+                "name": "Standard_LRS",
+                "tier": "Standard"
+            },
+            "kind": "Storage",
+            "name": "[parameters('registries_dregistry_name')]",
+            "apiVersion": "2016-01-01",
+            "location": "westeurope",
+            "tags": {
+                "containerregistry": "dockerregistry"
+            }
+        },
+        {
+            "type": "Microsoft.ContainerRegistry/registries",
+            "name": "[parameters('registries_dregistry_name')]",
+            "apiVersion": "2016-06-27-preview",
+            "location": "westeurope",
+            "tags": {},
+            "properties": {
+                "adminUserEnabled": false,
+                "storageAccount": {
+                    "name": "[parameters('registries_dregistry_name')]",
+                    "accessKey": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('registries_dregistry_name')), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value]"
+                }
+            },
+            "resources": [],
+            "dependsOn": []
+        }
+    ]
+}
