@@ -16,7 +16,8 @@ clientid="34e0e4f3-d330-42ab-bf91-164030063f13"
 clientsecret="01TmHlw9feylLTUgqSZK9VsRwVDNO9o5svSu94J7MSM="
 numberofnodes=3
 
-id=$(base64 /dev/urandom | tr -d '/+' | tr 'A-Z' 'a-z' | dd bs=8 count=1 2>/dev/null)
+#id=$(base64 /dev/urandom | tr -d '/+' | tr 'A-Z' 'a-z' | dd bs=8 count=1 2>/dev/null)
+id=$(uuid)
 echo $id >/tmp/id
 
 if [ -d ~/go/src/github.com/Azure/acs-engine/ ]
