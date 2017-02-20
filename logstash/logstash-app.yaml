@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: elkdemo-logstash
 spec:
-  replicas: 3
+  replicas: 1
   template:
     metadata:
       labels:
@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
       - name: elkdemo
-        image: cvugrinec/logstash:1.0
+        image: cvugrinec/logstash:1.1
         ports:
         - containerPort: 5000
       imagePullSecrets:

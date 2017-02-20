@@ -4,7 +4,6 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.2.RELEASE")
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.2.RELEASE")
     }
 }
 
@@ -26,10 +25,13 @@ sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-web") {
-    }
-    compile("org.springframework.boot:spring-boot-starter-actuator")
-    testCompile("junit:junit")
+  compile 'org.codehaus.groovy:groovy'
+  compile ('org.springframework.boot:spring-boot-starter-web'){
+    exclude module: 'org.springframework.boot:spring-boot-starter-logging'
+  }
+//  compile group: 'net.logstash.logback', name: 'logstash-logback-encoder', version: '3.5'
+  compile 'log4j:log4j:1.2.17'
+  //compile 'org.slf4j:slf4j-log4j12:1.7.18'
 }
 
 task wrapper(type: Wrapper) {
