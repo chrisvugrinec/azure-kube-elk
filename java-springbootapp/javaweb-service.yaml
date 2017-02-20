@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: javawebapp
+  namespace: default
+  labels:
+    component: javawebapp
+    role: webapp
+spec:
+  type: LoadBalancer
+  selector:
+    component: javawebapp
+    role: javawebapp
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 80
+    protocol: TCP

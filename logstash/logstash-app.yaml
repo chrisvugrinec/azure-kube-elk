@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
       - name: elkdemo
-        image: dregvuelk-microsoft.azurecr.io/logstash:1.0
+        image: cvugrinec/logstash:1.0
         ports:
         - containerPort: 5000
       imagePullSecrets:
