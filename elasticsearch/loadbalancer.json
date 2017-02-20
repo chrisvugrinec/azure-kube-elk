@@ -1,0 +1,102 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "loadBalancers_elastic_lb_name": {
+            "defaultValue": "elastic-lb",
+            "type": "String"
+        },
+        "virtualNetworks_elk_demo_vnet_name": {
+            "defaultValue": "elk-demo-vnet",
+            "type": "String"
+        },
+        "loadBalancers_elastic_lb_id_1": {
+
+              "defaultValue": "[concat('elastic-lb1-',uniqueString('elastic'))]",
+              "type": "String"
+        },
+        "loadBalancers_elastic_lb_id_2": {
+              "defaultValue": "[concat('elastic-lb2-',uniqueString('elastic'))]",
+              "type": "String"
+        },
+        "loadBalancers_es_id": {
+            "defaultValue": "/subscriptions/XXX_SUB_XXX/resourceGroups/XXX_RG_XXX/providers/Microsoft.Network/loadBalancers/elastic-lb/frontendIPConfigurations/LoadBalancerFrontEnd",
+            "type": "String"
+        },
+        "loadBalancers_es_id_1": {
+            "defaultValue": "/subscriptions/XXX_SUB_XXX/resourceGroups/XXX_RG_XXX/providers/Microsoft.Network/loadBalancers/elastic-lb/backendAddressPools/elastic-lb-backendpool",
+            "type": "String"
+        },
+        "loadBalancers_es_id_2": {
+            "defaultValue": "/subscriptions/XXX_SUB_XXX/resourceGroups/XXX_RG_XXX/providers/Microsoft.Network/loadBalancers/elastic-lb/probes/elastic-lb-healthprobe",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Network/loadBalancers",
+            "name": "[parameters('loadBalancers_elastic_lb_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "westeurope",
+            "properties": {
+                "frontendIPConfigurations": [
+                    {
+                        "name": "LoadBalancerFrontEnd",
+                        "properties": {
+                            "privateIPAddress": "11.11.0.100",
+                            "privateIPAllocationMethod": "Static",
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_elk_demo_vnet_name')), '/subnets/elk-demo-vnet-sub')]"
+                            }
+                        }
+                    }
+                ],
+                "backendAddressPools": [
+                    {
+                        "name": "[concat(parameters('loadBalancers_elastic_lb_name'),'-backendpool')]"
+                    }
+                ],
+                "loadBalancingRules": [
+                    {
+                        "name": "[concat(parameters('loadBalancers_elastic_lb_name'),'-loadbalancerule')]",
+                        "properties": {
+                            "frontendIPConfiguration": {
+                                "id": "[parameters('loadBalancers_es_id')]"
+                            },
+                            "frontendPort": 9200,
+                            "backendPort": 9200,
+                            "enableFloatingIP": false,
+                            "idleTimeoutInMinutes": 4,
+                            "protocol": "Tcp",
+                            "loadDistribution": "Default",
+                            "backendAddressPool": {
+                                "id": "[parameters('loadBalancers_es_id_1')]"
+                            },
+                            "probe": {
+                                "id": "[parameters('loadBalancers_es_id_2')]"
+                            }
+                        }
+                    }
+                ],
+                "probes": [
+                    {
+                        "name": "[concat(parameters('loadBalancers_elastic_lb_name'),'-healthprobe')]",
+                        "properties": {
+                            "protocol": "Tcp",
+                            "port": 9200,
+                            "intervalInSeconds": 5,
+                            "numberOfProbes": 2
+                        }
+                    }
+                ],
+                "inboundNatRules": [],
+                "outboundNatRules": [],
+                "inboundNatPools": []
+            },
+            "resources": [],
+            "dependsOn": [
+            ]
+        }
+    ]
+}

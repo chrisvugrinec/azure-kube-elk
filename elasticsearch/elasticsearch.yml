@@ -1,3 +1,4 @@
-cluster.name: vu-elk
-node.name: "elastic3"
-discovery.zen.ping.unicast.hosts: ["elastic1:9200", "elastic2:9200","elastic3:9200"]
+cluster.name: elk-demo
+node.name: "elk-demo-elastic1"
+discovery.zen.ping.multicast.enabled: false
+discovery.zen.ping.unicast.hosts: ["elk-demo-elastic1", "elk-demo-elastic2","elk-demo-elastic3:9200"]
