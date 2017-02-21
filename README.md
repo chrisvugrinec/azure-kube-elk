@@ -1,4 +1,4 @@
-# Azure DCOS Elk
+# Azure Elk stack
 
 This contains the sources for the following youtube flic:
 
