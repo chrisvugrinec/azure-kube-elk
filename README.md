@@ -38,5 +38,24 @@ The Elastic search machines will be rolled out with ARM templates in combination
 * vneet peering (making sure the different vnets can talk to eachother)
   * cd vnet
   * ./create-vnetpeer.sh
-* 
-
+* get kubectl working on your machine (required!)
+  * scp azureuser@[ YOUR KUBE MASTER ]:~/.kube/config ~/.kube/config
+* deploy and configure logstash
+  * cd logstash
+  * check conf/logstash.conf
+  * if you used the default stuff like in this demo..no config is needed..you can just use the existing image defined in the logstash-app.yaml
+  * deploy logstash with the following command: kubectl create -f logstash-app.yaml
+  * ./expose-svc
+* deploy and configure kibana
+  * cd kibana
+  * check the kibana-app.yaml
+  * if you used the default stuff like in this demo..no config is needed..you can just use the existing image defined in the kibana-app.yaml
+  * deploy kibana with the following command: kubectl create -f kibana-app.yaml
+  * ./expose-svc
+* deploy and configure the springbootapp
+  * cd java-springbootapp
+  * check the log4j.properties file src/main/resources/log4j.properties 
+  * build the app wiht the following command: gradle build
+  * java -jar build/libs/gs-spring-boot-0.1.0.jar
+  * goto http://localhost:8080  and see the app...in the log you will see some log messages appear
+  * check your kubectl logs -f [logstash] and check the kibana to see your logging appear
