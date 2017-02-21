@@ -33,6 +33,8 @@ The Elastic search machines will be rolled out with ARM templates in combination
   * ./loginToAzure.sh
   * edit the config-kubecluster.sh and fill in the clientid and clientsecret variables..you can find them in the portal (client id corresponds with application id). ALSO make sure that that you escape the / character in the password...meaning / becomes \/
   * edit the create-kubecluster.sh and fill in the resourcegroup
+  * ./config-kubecluster.sh
+  * ./create-kubecluster.sh
  *  
    
 * vneet peering (making sure the different vnets can talk to eachother)
