@@ -1,6 +1,6 @@
 # Azure Elk stack
 
-This contains the sources for the following youtube flic:
+This contains the sources for the following youtube flic: https://youtu.be/oxjPX1oSBDs
 
 This is in my opinion a valid scenario of running an ELK stack on Azure.
 This repo contains the following:
