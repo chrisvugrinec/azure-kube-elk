@@ -36,5 +36,7 @@ The Elastic search machines will be rolled out with ARM templates in combination
   * ./config-kubecluster.sh
   * ./create-kubecluster.sh
 * vneet peering (making sure the different vnets can talk to eachother)
-  *
+  * cd vnet
+  * ./create-vnetpeer.sh
+* 
 
