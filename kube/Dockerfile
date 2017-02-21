@@ -9,6 +9,7 @@ RUN apt-get update && \
   apt-get install -y curl && \
   apt-get install -y nodejs && \
   apt-get install -y npm && \
+  apt-get install -y vim && \
   npm -g install azure-cli && \
   mkdir ~/.kube && \
   ln -s /usr/bin/nodejs /usr/bin/node && \
