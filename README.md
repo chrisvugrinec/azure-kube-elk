@@ -19,4 +19,5 @@ The Elastic search machines will be rolled out with ARM templates in combination
   * now create an internal loadbalancer: ./createLB.sh
   * there is one step I couldnt script...linking the availability set to the loadbalancer..you have to do this via the portal --> LB --> elastic-lb --> backend pools --> elastic-lb-backendpool --> Add machines ..that's it (will need to have a look at it later) . Test the Load Balancer from the Kube Master ..do: curl http://11.11.0.100:9200/_cluster/health you can find node information with this URL http://11.11.0.100:9200/nodes
   * if all works (you see in the INTERNAL loadbalancer all your eleastic nodes) then you can disable all the public IP addresses per elastic node, this way only internal traffic is allowed
+* creating kube cluster
 

@@ -1,3 +1,4 @@
 secret.txt
 certificate.pem
 loginToAzure.sh
+peer*.json
